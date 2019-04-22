@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { WithStateMachineService, StateMachineHOCState } from '../lib/with-state-machine.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { WithStateMachineService, StateMachineData } from '../lib/with-state-machine.service';
 import { TestContext, TestMachineStateSchema, TestMachineEvent, TestMachineService, TestMachineConfig, TestMachineInitialContext, TestMachineAction } from './test-fms.config';
 
 @Component({
@@ -7,31 +7,36 @@ import { TestContext, TestMachineStateSchema, TestMachineEvent, TestMachineServi
   templateUrl: './test-fsm.component.html',
   styleUrls: ['./test-fsm.component.less']
 })
-export class TestFsmComponent implements OnInit {
+export class TestFsmComponent implements OnInit, OnDestroy {
 
-  state: StateMachineHOCState<TestContext, TestMachineStateSchema>;
+  state: StateMachineData<TestContext, TestMachineStateSchema>;
 
   constructor(private stateMachine: WithStateMachineService<TestMachineStateSchema, TestContext, TestMachineEvent>) {
-    const options =  {
+    const options = {
       services: {
-        [TestMachineService.FETCH_DATA]: (ctx) => Promise.resolve({items: ctx.extra.split('')})
+        [TestMachineService.FETCH_DATA]: (ctx) => Promise.resolve({ items: ctx.extra.split('') })
       }
     };
 
     this.stateMachine.init(TestMachineConfig, TestMachineInitialContext, options);
-    this.stateMachine.subscribe((state) => {
-      this.state = state;
-    })
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.stateMachine.subscribe((state) => {
+      this.state = state;
+    });
+  }
+
+  ngOnDestroy() {
+    this.stateMachine.destroy();
+  }
 
   handleClick() {
-    this.stateMachine.dispatch({type: TestMachineAction.SUBMIT, extra: 'ok'} );
+    this.stateMachine.dispatch({ type: TestMachineAction.SUBMIT, extra: 'ok' });
   }
 
   handleReset() {
-    this.stateMachine.dispatch({type: TestMachineAction.RESET} );
+    this.stateMachine.dispatch({ type: TestMachineAction.RESET });
   }
 
 }

@@ -15,7 +15,7 @@ import {
 import { v4 } from 'uuid';
 import { ReplaySubject } from 'rxjs';
 
-export interface StateMachineHOCState<TContext, TStateSchema extends StateSchema> {
+export interface StateMachineData<TContext, TStateSchema extends StateSchema> {
     currentState: StateMachineStateName<TStateSchema>;
     context: TContext,
     stateHash?: string;
@@ -37,12 +37,11 @@ export class WithStateMachineService<TStateSchema extends StateSchema, TContext 
     private interpreter: Interpreter<TContext, TStateSchema, TEvent>;
     private currentStateName: StateValue;
     private currentContext: TContext | null = null;
-    private state: StateMachineHOCState<TContext, TStateSchema>;
-    private updateStream = new ReplaySubject<StateMachineHOCState<TContext, TStateSchema>>(1);
+    private state: StateMachineData<TContext, TStateSchema>;
+    private updateStream = new ReplaySubject<StateMachineData<TContext, TStateSchema>>(1);
 
     public init(config: MachineConfig<TContext, TStateSchema, TEvent>, initialContext: TContext, configOptions: Partial<MachineOptions<TContext, TEvent>> = {}) {
         this.stateMachine = Machine(config, configOptions, initialContext);
-        // this.stateMachine.withConfig(configOptions);
         this.state = { currentState: this.stateMachine.initialState.value as StateMachineStateName<TStateSchema>, context: this.stateMachine.context as TContext };
         this.initInterpreter();
         this.update();
@@ -57,7 +56,7 @@ export class WithStateMachineService<TStateSchema extends StateSchema, TContext 
         this.updateStream.next(this.state);
     }
 
-    public subscribe(callback: (state: StateMachineHOCState<TContext, TStateSchema>) => void): void {
+    public subscribe(callback: (state: StateMachineData<TContext, TStateSchema>) => void): void {
         this.updateStream.subscribe(callback);
     }
 
