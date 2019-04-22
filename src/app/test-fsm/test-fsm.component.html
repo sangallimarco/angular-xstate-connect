@@ -1,7 +1,18 @@
-<p>
-  test-fsm works!
+<div>
+  <h1>{{state.currentState}}</h1>
 
-  {{state | json}}
+  <code>
+    {{state | json}}
+  </code>
+
+  <div>
+    <ul>
+      <li *ngFor="let item of state.context.items">{{item}}</li>
+    </ul>
+  </div>
 
   <button (click)="handleClick()">SUBMIT</button>
-</p>
+  <button (click)="handleReset()">RESET</button>
+</div>
+
+

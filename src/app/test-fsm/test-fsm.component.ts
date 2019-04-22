@@ -30,4 +30,8 @@ export class TestFsmComponent implements OnInit {
     this.stateMachine.dispatch({type: TestMachineAction.SUBMIT, extra: 'ok'} );
   }
 
+  handleReset() {
+    this.stateMachine.dispatch({type: TestMachineAction.RESET} );
+  }
+
 }
