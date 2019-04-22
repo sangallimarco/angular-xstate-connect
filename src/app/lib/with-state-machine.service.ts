@@ -27,9 +27,6 @@ export interface StateMachineAction<T> extends EventObject {
 
 export type StateMachineStateName<T extends StateSchema> = keyof T['states'];
 
-export type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
-
-export type Subtract<T, K> = Omit<T, keyof K>;
 
 @Injectable({
     providedIn: 'root'
