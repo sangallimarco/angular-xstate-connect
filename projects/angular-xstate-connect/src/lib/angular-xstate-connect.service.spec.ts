@@ -6,7 +6,7 @@ describe('AngularXstateConnectService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: AngularXstateConnectService = TestBed.get(AngularXstateConnectService);
+    const service: AngularXstateConnectService<any, any, any> = TestBed.get(AngularXstateConnectService);
     expect(service).toBeTruthy();
   });
 });
