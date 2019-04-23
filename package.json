@@ -1,6 +1,16 @@
 {
-  "name": "my-angular-app",
+  "name": "angular-xstate-connect-test",
   "version": "0.0.0",
+  "author": "Marco Sangalli <sangalli.marco@gmail.com>",
+  "license": "ISC",
+  "description": "Angular Connect Service for Xstate",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sangallimarco/angular-xstate-connect.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sangallimarco/angular-xstate-connect/issues"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

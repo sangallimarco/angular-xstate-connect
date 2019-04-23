@@ -1,6 +1,16 @@
 {
   "name": "angular-xstate-connect",
   "version": "0.0.1",
+  "author": "Marco Sangalli <sangalli.marco@gmail.com>",
+  "license": "ISC",
+  "description": "Angular Connect Service for Xstate",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sangallimarco/angular-xstate-connect.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sangallimarco/angular-xstate-connect/issues"
+  },
   "peerDependencies": {
     "@angular/common": "^7.2.0",
     "@angular/core": "^7.2.0",
