@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { WithStateMachineService, StateMachineData } from '../lib/with-state-machine.service';
+import {  StateMachineData, AngularXstateConnectService } from 'angular-xstate-connect';
 import { TestContext, TestMachineStateSchema, TestMachineEvent, TestMachineService, TestMachineConfig, TestMachineInitialContext, TestMachineAction } from './test-fms.config';
 import { TestFsmService } from './test-fsm.service';
 
@@ -11,8 +11,9 @@ import { TestFsmService } from './test-fsm.service';
 export class TestFsmComponent implements OnInit, OnDestroy {
 
   state: StateMachineData<TestContext, TestMachineStateSchema>;
+  submitVisible: boolean = true;
 
-  constructor(private stateMachine: WithStateMachineService<TestMachineStateSchema, TestContext, TestMachineEvent>, private dataService: TestFsmService) {
+  constructor(private stateMachine: AngularXstateConnectService<TestMachineStateSchema, TestContext, TestMachineEvent>, private dataService: TestFsmService) {
 
     const options = {
       services: {
