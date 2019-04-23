@@ -13,7 +13,7 @@ export class TestFsmComponent implements OnInit, OnDestroy {
   state: StateMachineData<TestContext, TestMachineStateSchema>;
 
   constructor(private stateMachine: WithStateMachineService<TestMachineStateSchema, TestContext, TestMachineEvent>, private dataService: TestFsmService) {
-    
+
     const options = {
       services: {
         [TestMachineService.FETCH_DATA]: (ctx) => this.dataService.getComments()

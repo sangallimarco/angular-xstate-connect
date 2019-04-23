@@ -17,12 +17,8 @@ export class TestFsmService {
 
   constructor(private http: HttpClient) { }
 
-  getComments(): Promise<Partial<TestContext>> {
-    return this.http.get<ApiCommment[]>(this.URI).toPromise()
-      .then(
-        comments => {
-          return { items: comments };
-        }
-      );
+  async getComments(): Promise<Partial<TestContext>> {
+    const items = await this.http.get<ApiCommment[]>(this.URI).toPromise();
+    return { items };
   }
 }
