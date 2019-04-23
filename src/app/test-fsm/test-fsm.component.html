@@ -1,14 +1,12 @@
-<div>
+<div class="test-fsm">
   <h1>{{state.currentState}}</h1>
 
   <code>
     {{state | json}}
   </code>
 
-  <div>
-    <ul>
-      <li *ngFor="let item of state.context.items">{{item}}</li>
-    </ul>
+  <div class="test-fsm__list">
+      <app-test-comment *ngFor="let item of state.context.items; let first = first"  [class.first-item]="first" [comment]="item"></app-test-comment>
   </div>
 
   <button (click)="handleClick()">SUBMIT</button>

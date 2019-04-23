@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WithStateMachineService, StateMachineData } from '../lib/with-state-machine.service';
 import { TestContext, TestMachineStateSchema, TestMachineEvent, TestMachineService, TestMachineConfig, TestMachineInitialContext, TestMachineAction } from './test-fms.config';
+import { TestFsmService } from './test-fsm.service';
 
 @Component({
   selector: 'app-test-fsm',
@@ -11,10 +12,11 @@ export class TestFsmComponent implements OnInit, OnDestroy {
 
   state: StateMachineData<TestContext, TestMachineStateSchema>;
 
-  constructor(private stateMachine: WithStateMachineService<TestMachineStateSchema, TestContext, TestMachineEvent>) {
+  constructor(private stateMachine: WithStateMachineService<TestMachineStateSchema, TestContext, TestMachineEvent>, private dataService: TestFsmService) {
+    
     const options = {
       services: {
-        [TestMachineService.FETCH_DATA]: (ctx) => Promise.resolve({ items: ctx.extra.split('') })
+        [TestMachineService.FETCH_DATA]: (ctx) => this.dataService.getComments()
       }
     };
 

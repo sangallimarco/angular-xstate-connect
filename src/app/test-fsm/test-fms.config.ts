@@ -1,12 +1,19 @@
 import { StateMachineAction } from '../lib/with-state-machine.service';
 import { MachineConfig } from 'xstate';
 import { log, assign } from 'xstate/lib/actions';
+import { ApiCommment } from './test-fsm.service';
 
 export interface TestContext {
-    items: string[];
+    items: ApiCommment[];
     cnt: number;
     extra: string;
 }
+
+export const TestMachineInitialContext: TestContext = {
+    items: [],
+    cnt: 0,
+    extra: ''
+};
 
 export enum TestMachineState {
     START = 'START',
@@ -112,8 +119,3 @@ export const TestMachineConfig: MachineConfig<TestContext, TestMachineStateSchem
     }
 };
 
-export const TestMachineInitialContext: TestContext = {
-    items: [],
-    cnt: 0,
-    extra: ''
-};
