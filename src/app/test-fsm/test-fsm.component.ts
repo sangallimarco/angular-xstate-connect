@@ -22,12 +22,13 @@ export class TestFsmComponent implements OnInit, OnDestroy {
     };
 
     this.stateMachine.init(TestMachineConfig, TestMachineInitialContext, options);
-  }
-
-  ngOnInit() {
     this.stateMachine.subscribe((state) => {
       this.state = state;
     });
+  }
+
+  ngOnInit() {
+
   }
 
   ngOnDestroy() {

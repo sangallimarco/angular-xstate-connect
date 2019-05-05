@@ -40,7 +40,7 @@ export class AngularXstateConnectService<TStateSchema extends StateSchema, TCont
   private state: StateMachineData<TContext, TStateSchema>;
   private updateStream = new ReplaySubject<StateMachineData<TContext, TStateSchema>>(1);
 
-  private initInterpreter() {
+  private initInterpreter(): void {
     if (!this.interpreter) {
       this.interpreter = interpret(this.stateMachine);
       this.interpreter
@@ -56,7 +56,7 @@ export class AngularXstateConnectService<TStateSchema extends StateSchema, TCont
     }
   }
 
-  private handleContext(context: TContext) {
+  private handleContext(context: TContext): void {
     if (context !== this.currentContext) {
       this.state = Object.assign(this.state, { context, stateHash: v4() });
       this.currentContext = context;
@@ -64,7 +64,7 @@ export class AngularXstateConnectService<TStateSchema extends StateSchema, TCont
     }
   }
 
-  private handleTransition(newState: State<TContext, EventObject>) {
+  private handleTransition(newState: State<TContext, EventObject>): void {
     const { changed, value } = newState;
 
     if (changed && value !== this.currentStateName) {
@@ -75,19 +75,19 @@ export class AngularXstateConnectService<TStateSchema extends StateSchema, TCont
     }
   }
 
-  public init(config: MachineConfig<TContext, TStateSchema, TEvent>, initialContext: TContext, configOptions: Partial<MachineOptions<TContext, TEvent>> = {}) {
+  public init(config: MachineConfig<TContext, TStateSchema, TEvent>, initialContext: TContext, configOptions: Partial<MachineOptions<TContext, TEvent>> = {}): void {
     this.stateMachine = Machine(config, configOptions, initialContext);
     this.state = { currentState: this.stateMachine.initialState.value as StateMachineStateName<TStateSchema>, context: this.stateMachine.context as TContext };
     this.initInterpreter();
     this.update();
   }
 
-  public destroy() {
+  public destroy(): void {
     this.stopInterpreter();
     this.currentContext = null;
   }
 
-  private update() {
+  private update(): void {
     this.updateStream.next(this.state);
   }
 
@@ -95,13 +95,13 @@ export class AngularXstateConnectService<TStateSchema extends StateSchema, TCont
     this.updateStream.subscribe(callback);
   }
 
-  public stopInterpreter() {
+  public stopInterpreter(): void {
     if (this.interpreter) {
       this.interpreter.stop();
     }
   }
 
-  public dispatch = (action: TEvent) => {
+  public dispatch = (action: TEvent): void => {
     if (this.interpreter) {
       this.interpreter
         .send(action);
