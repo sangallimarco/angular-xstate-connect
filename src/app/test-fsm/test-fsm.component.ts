@@ -6,7 +6,8 @@ import { TestFsmService } from './test-fsm.service';
 @Component({
   selector: 'app-test-fsm',
   templateUrl: './test-fsm.component.html',
-  styleUrls: ['./test-fsm.component.less']
+  styleUrls: ['./test-fsm.component.less'],
+  providers: [AngularXstateConnectService]
 })
 export class TestFsmComponent implements OnInit, OnDestroy {
 

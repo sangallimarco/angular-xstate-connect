@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TestFsmComponent } from './test-fsm/test-fsm.component';
 import { TestCommentComponent } from './test-comment/test-comment.component';
-import { AngularXstateConnectModule } from 'angular-xstate-connect';
 
 @NgModule({
   declarations: [
@@ -18,7 +17,6 @@ import { AngularXstateConnectModule } from 'angular-xstate-connect';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    AngularXstateConnectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

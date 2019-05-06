@@ -28,9 +28,7 @@ export interface StateMachineAction<T> extends EventObject {
 export type StateMachineStateName<T extends StateSchema> = keyof T['states'];
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AngularXstateConnectService<TStateSchema extends StateSchema, TContext = DefaultContext, TEvent extends EventObject = EventObject> {
 
   private stateMachine: StateMachine<TContext, TStateSchema, TEvent>;
@@ -39,6 +37,10 @@ export class AngularXstateConnectService<TStateSchema extends StateSchema, TCont
   private currentContext: TContext | null = null;
   private state: StateMachineData<TContext, TStateSchema>;
   private updateStream = new ReplaySubject<StateMachineData<TContext, TStateSchema>>(1);
+
+  constructor() {
+    console.warn('instance');
+  }
 
   private initInterpreter(): void {
     if (!this.interpreter) {
