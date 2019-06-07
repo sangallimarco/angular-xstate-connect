@@ -1,7 +1,7 @@
-import { StateMachineAction } from '../lib/with-state-machine.service';
 import { MachineConfig } from 'xstate';
 import { log, assign } from 'xstate/lib/actions';
 import { ApiCommment } from './test-fsm.service';
+import { StateMachineAction } from 'angular-xstate-connect';
 
 export interface TestContext {
     items: ApiCommment[];

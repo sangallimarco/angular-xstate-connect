@@ -1,4 +1,4 @@
-<div class="test-fsm">
+<div class="test-fsm" [class.test-fsm--active]="submitVisible">
   <h1>{{state.currentState}}</h1>
 
   <code>
@@ -9,7 +9,12 @@
       <app-test-comment *ngFor="let item of state.context.items; let first = first"  [class.first-item]="first" [comment]="item"></app-test-comment>
   </div>
 
-  <button (click)="handleClick()">SUBMIT</button>
+  <div [ngSwitch]="state.currentState">
+    <div *ngSwitchCase="'START'"> need to use enums here
+      <button (click)="handleClick()">SUBMIT</button>
+    </div>
+  </div>
+  
   <button (click)="handleReset()">RESET</button>
 </div>
 

@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "angular-xstate-connect": [
+        "dist/angular-xstate-connect"
+      ],
+      "angular-xstate-connect/*": [
+        "dist/angular-xstate-connect/*"
+      ]
+    }
   }
 }
