@@ -17,19 +17,23 @@ import { ReplaySubject } from 'rxjs';
 
 export interface StateMachineData<TContext, TStateSchema extends StateSchema> {
   currentState: StateMachineStateName<TStateSchema>;
-  context: TContext,
+  context: TContext;
   stateHash?: string;
 }
 
 export interface StateMachineAction<T> extends EventObject {
-  data: Partial<T>
+  data: Partial<T>;
 }
 
 export type StateMachineStateName<T extends StateSchema> = keyof T['states'];
 
 
 @Injectable()
-export class AngularXstateConnectService<TStateSchema extends StateSchema, TContext = DefaultContext, TEvent extends EventObject = EventObject> {
+export class AngularXstateConnectService<
+  TStateSchema extends StateSchema,
+  TContext = DefaultContext,
+  TEvent extends EventObject = EventObject
+  > {
 
   private stateMachine: StateMachine<TContext, TStateSchema, TEvent>;
   private interpreter: Interpreter<TContext, TStateSchema, TEvent>;
@@ -77,9 +81,14 @@ export class AngularXstateConnectService<TStateSchema extends StateSchema, TCont
     }
   }
 
-  public init(config: MachineConfig<TContext, TStateSchema, TEvent>, initialContext: TContext, configOptions: Partial<MachineOptions<TContext, TEvent>> = {}): void {
+  public init(
+    config: MachineConfig<TContext, TStateSchema, TEvent>, initialContext: TContext,
+    configOptions: Partial<MachineOptions<TContext, TEvent>> = {}): void {
     this.stateMachine = Machine(config, configOptions, initialContext);
-    this.state = { currentState: this.stateMachine.initialState.value as StateMachineStateName<TStateSchema>, context: this.stateMachine.context as TContext };
+    this.state = {
+      currentState: this.stateMachine.initialState.value as StateMachineStateName<TStateSchema>,
+      context: this.stateMachine.context as TContext
+    };
     this.initInterpreter();
     this.update();
   }
@@ -108,5 +117,5 @@ export class AngularXstateConnectService<TStateSchema extends StateSchema, TCont
       this.interpreter
         .send(action);
     }
-  };
+  }
 }

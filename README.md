@@ -3,12 +3,9 @@
 ## Library and Test app
 This repo contains the library code and a demo application
 
-## Build Library
+## Library
 
-Library is located in ./projects/angular-xstate-connect
-
-### Build lib and contribute
-`ng build angular-xstate-connect`
+Library README is located in ./projects/angular-xstate-connect
 
 ## Demo App
 
