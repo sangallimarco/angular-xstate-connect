@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {  StateMachineData, AngularXstateConnectService } from 'angular-xstate-connect';
-import { TestContext, TestMachineStateSchema, TestMachineEvent, TestMachineService, TestMachineConfig, TestMachineInitialContext, TestMachineAction } from './test-fms.config';
+import { TestContext, TestMachineStateSchema, TestMachineEvent, TestMachineService, TestMachineConfig, TestMachineInitialContext, TestMachineAction, TestMachineState } from './test-fms.config';
 import { TestFsmService } from './test-fsm.service';
 
 @Component({
@@ -13,6 +13,7 @@ export class TestFsmComponent implements OnInit, OnDestroy {
 
   state: StateMachineData<TestContext, TestMachineStateSchema>;
   submitVisible: boolean = true;
+  // testMachineStateEnum: TestMachineState;
 
   constructor(private stateMachine: AngularXstateConnectService<TestMachineStateSchema, TestContext, TestMachineEvent>, private dataService: TestFsmService) {
 
@@ -25,6 +26,7 @@ export class TestFsmComponent implements OnInit, OnDestroy {
     this.stateMachine.init(TestMachineConfig, TestMachineInitialContext, options);
     this.stateMachine.subscribe((state) => {
       this.state = state;
+      this.submitVisible = state.currentState === TestMachineState.START;
     });
   }
 

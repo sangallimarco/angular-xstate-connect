@@ -1,4 +1,16 @@
-# MyAngularApp
+# Angular Xstate Connector 
+
+## Library and Test app
+This repo contains the library code and a demo application
+
+## Build Library
+
+Library is located in ./projects/angular-xstate-connect
+
+### Build lib and contribute
+`ng build angular-xstate-connect`
+
+## Demo App
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
 
