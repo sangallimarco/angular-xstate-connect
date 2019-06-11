@@ -1,16 +1,21 @@
 
 import { AngularXstateConnectService, StateMachineData } from 'angular-xstate-connect';
 import { EventObject, StateSchema, DefaultContext } from 'xstate';
+import { Injector } from '@angular/core';
 
-export interface componentFsmProps {
-  
+
+export interface ConnectFSMProps<TStateSchema, TContext, TEvent extends EventObject = EventObject> {
+  stateMachine: AngularXstateConnectService<TStateSchema, TContext, TEvent>;
+  state: TContext;
 }
 
-export function connectFSM<TStateSchema extends StateSchema, TContext = DefaultContext, TEvent extends EventObject = EventObject>(): ClassDecorator {
+export function ConnectFSM<TStateSchema extends StateSchema, TContext = DefaultContext, TEvent extends EventObject = EventObject>(): ClassDecorator {
+
+  type serviceType = AngularXstateConnectService<TStateSchema, TContext, TEvent>;
 
   return function (constructor: any) {
-    // TODO: use an injector here ... AppModule.injector.get(AnalyticsService);
-    const stateMachine = new AngularXstateConnectService<TStateSchema, TContext, TEvent>();
+    const injector = Injector.create({ providers: [{ provide: AngularXstateConnectService,  deps: [] }] });
+    const stateMachine = injector.get(AngularXstateConnectService) as serviceType;
 
     const ngOnInit = constructor.prototype.ngOnInit;
 
@@ -20,7 +25,7 @@ export function connectFSM<TStateSchema extends StateSchema, TContext = DefaultC
 
     constructor.prototype.ngOnInit = function (...args) {
       stateMachine.subscribe((state) => {
-        constructor.state = state;
+        this.state = state;
       });
       ngOnInit && ngOnInit.apply(this, args);
     }
