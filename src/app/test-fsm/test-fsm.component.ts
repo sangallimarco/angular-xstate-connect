@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import {  StateMachineData, AngularXstateConnectService } from 'angular-xstate-connect';
+import { Component, OnInit, OnDestroy, Injector } from '@angular/core';
 import { TestContext, TestMachineStateSchema, TestMachineEvent, TestMachineService, TestMachineConfig, TestMachineInitialContext, TestMachineAction, TestMachineState } from './test-fms.config';
 import { TestFsmService } from './test-fsm.service';
+import { AngularXstateConnectService, AngularXstateBaseComponent } from 'angular-xstate-connect';
 
 @Component({
   selector: 'app-test-fsm',
@@ -9,23 +9,28 @@ import { TestFsmService } from './test-fsm.service';
   styleUrls: ['./test-fsm.component.less'],
   providers: [AngularXstateConnectService]
 })
-export class TestFsmComponent implements OnInit, OnDestroy {
+export class TestFsmComponent extends AngularXstateBaseComponent<TestContext, TestMachineStateSchema, TestMachineEvent> implements OnInit, OnDestroy {
 
-  state: StateMachineData<TestContext, TestMachineStateSchema>;
   submitVisible: boolean = true;
-  // testMachineStateEnum: TestMachineState;
 
-  constructor(private stateMachine: AngularXstateConnectService<TestMachineStateSchema, TestContext, TestMachineEvent>, private dataService: TestFsmService) {
+  constructor(
+    stateMachine: AngularXstateConnectService<TestMachineStateSchema, TestContext, TestMachineEvent>,
+    private dataService: TestFsmService
+  ) {
 
-    const options = {
-      services: {
-        [TestMachineService.FETCH_DATA]: (ctx) => this.dataService.getComments()
+    // initialise wrapper
+    super(stateMachine);
+    this.init(
+      TestMachineConfig,
+      TestMachineInitialContext,
+      {
+        services: {
+          [TestMachineService.FETCH_DATA]: (ctx) => this.dataService.getComments()
+        }
       }
-    };
+    );
 
-    this.stateMachine.init(TestMachineConfig, TestMachineInitialContext, options);
-    this.stateMachine.subscribe((state) => {
-      this.state = state;
+    this.subscribe((state) => {
       this.submitVisible = state.currentState === TestMachineState.START;
     });
   }
@@ -34,16 +39,12 @@ export class TestFsmComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy() {
-    this.stateMachine.destroy();
-  }
-
   handleClick() {
-    this.stateMachine.dispatch({ type: TestMachineAction.SUBMIT, extra: 'ok' });
+    this.dispatch({ type: TestMachineAction.SUBMIT, extra: 'ok' });
   }
 
   handleReset() {
-    this.stateMachine.dispatch({ type: TestMachineAction.RESET });
+    this.dispatch({ type: TestMachineAction.RESET });
   }
 
 }

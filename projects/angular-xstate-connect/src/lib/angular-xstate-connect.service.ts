@@ -95,6 +95,7 @@ export class AngularXstateConnectService<
 
   public destroy(): void {
     this.stopInterpreter();
+    this.updateStream.unsubscribe();
     this.currentContext = null;
   }
 

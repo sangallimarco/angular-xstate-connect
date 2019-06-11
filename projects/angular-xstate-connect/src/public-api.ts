@@ -4,3 +4,4 @@
 
 // export * from './lib/angular-xstate-connect.module';
 export * from './lib/angular-xstate-connect.service';
+export * from './lib/angular-xstate-base.component';
