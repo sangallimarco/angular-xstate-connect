@@ -11,6 +11,7 @@ import { AngularXstateConnectService, AngularXstateBaseComponent } from 'angular
 })
 export class TestFsmComponent extends AngularXstateBaseComponent<TestContext, TestMachineStateSchema, TestMachineEvent> implements OnInit {
 
+  // remote comminication stream, it is then passed to the FSM
   @Input() stream: EventEmitter<TestMachineEvent>;
   submitVisible: boolean = true;
 
