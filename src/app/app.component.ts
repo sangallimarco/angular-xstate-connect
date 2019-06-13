@@ -9,7 +9,11 @@ import { TestMachineEvent, TestMachineAction } from './test-fsm/test-fms.config'
 export class AppComponent {
 
   title = 'my-angular-app';
-  stream = new EventEmitter<TestMachineEvent>();
+  private readonly stream = new EventEmitter<TestMachineEvent>();
+
+  getStream() {
+    return this.stream;
+  }
 
   handleRemoteAction() {
     this.stream.next({type: TestMachineAction.RESET});
