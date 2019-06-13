@@ -1,6 +1,6 @@
 {
   "name": "angular-xstate-connect",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "author": "Marco Sangalli <sangalli.marco@gmail.com>",
   "license": "ISC",
   "description": "Angular Connect Service for Xstate",
