@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { ApiCommment } from '../test-fsm/test-fsm.service';
 
 @Component({
@@ -9,10 +9,15 @@ import { ApiCommment } from '../test-fsm/test-fsm.service';
 })
 export class TestCommentComponent implements OnInit {
   @Input() comment: ApiCommment;
+  @Output() onSelect = new EventEmitter<void>();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  handleClick() {
+    this.onSelect.next();
   }
 
 }

@@ -6,7 +6,7 @@
   </code>
 
   <div class="test-fsm__list">
-      <app-test-comment *ngFor="let item of state.context.items; let first = first"  [class.first-item]="first" [comment]="item"></app-test-comment>
+      <app-test-comment *ngFor="let item of state.context.items; let first = first"  [class.first-item]="first" [comment]="item" (onSelect)="handleSelect()"></app-test-comment>
   </div>
 
   <div [ngSwitch]="state.currentState">

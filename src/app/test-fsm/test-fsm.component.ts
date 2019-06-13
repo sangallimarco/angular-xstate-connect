@@ -47,4 +47,8 @@ export class TestFsmComponent extends AngularXstateBaseComponent<TestContext, Te
     this.dispatch({ type: TestMachineAction.RESET });
   }
 
+  handleSelect() {
+    this.dispatch({ type: TestMachineAction.RESET });
+  }
+
 }
