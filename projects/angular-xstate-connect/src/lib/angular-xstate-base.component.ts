@@ -1,24 +1,33 @@
-import { OnInit, OnDestroy } from '@angular/core';
+import { OnInit, OnDestroy, Input, EventEmitter } from '@angular/core';
 import { StateMachineData, AngularXstateConnectService } from './angular-xstate-connect.service';
 import { MachineConfig, EventObject, MachineOptions } from 'xstate';
+import { Subscription } from 'rxjs';
 
 export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends EventObject = EventObject> implements OnInit, OnDestroy {
 
     public state: StateMachineData<TContext, TStateSchema>;
-    protected stateMachine: AngularXstateConnectService<TStateSchema, TContext, TEvent>;
+    private streamSub: Subscription | undefined;
 
     constructor(
-        stateMachine: AngularXstateConnectService<TStateSchema, TContext, TEvent>
+        private stateMachine: AngularXstateConnectService<TStateSchema, TContext, TEvent>,
+        private config: MachineConfig<TContext, TStateSchema, TEvent>,
+        private initialContext: TContext
     ) {
-        this.stateMachine = stateMachine;
     }
 
-    init(config: MachineConfig<TContext, TStateSchema, TEvent>,
-        initialContext: TContext, configOptions?: Partial<MachineOptions<TContext, TEvent>>) {
-        this.stateMachine.init(config, initialContext, configOptions);
+    init(
+        configOptions?: Partial<MachineOptions<TContext, TEvent>>,
+        stream?: EventEmitter<TEvent>
+    ) {
+        this.stateMachine.init(this.config, this.initialContext, configOptions);
         this.stateMachine.subscribe((state) => {
             this.state = state;
         });
+        if (stream) {
+            this.streamSub = stream.subscribe((event: TEvent) => {
+                this.stateMachine.dispatch(event);
+            });
+        }
     }
 
     ngOnInit() {
@@ -34,7 +43,12 @@ export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends E
     }
 
     ngOnDestroy() {
+        if (this.streamSub) {
+            this.streamSub.unsubscribe();
+        }
         this.stateMachine.destroy();
     }
+
+
 
 }
