@@ -1,19 +1,14 @@
-import { OnInit, OnDestroy, Component, Injectable } from '@angular/core';
+import { OnInit, OnDestroy } from '@angular/core';
 import { StateMachineData, AngularXstateConnectService } from './angular-xstate-connect.service';
 import { MachineConfig, EventObject, MachineOptions } from 'xstate';
 
-export interface AngularXstateBaseProps<TContext, TStateSchema> {
-    state: StateMachineData<TContext, TStateSchema>
-}
-
-@Injectable()
-export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends EventObject = EventObject> implements OnInit, OnDestroy, AngularXstateBaseProps<TContext, TStateSchema> {
+export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends EventObject = EventObject> implements OnInit, OnDestroy {
 
     public state: StateMachineData<TContext, TStateSchema>;
-    // private stateMachine: AngularXstateConnectService<TStateSchema, TContext, TEvent>;
+    protected stateMachine: AngularXstateConnectService<TStateSchema, TContext, TEvent>;
 
     constructor(
-        private stateMachine: AngularXstateConnectService<TStateSchema, TContext, TEvent>
+        stateMachine: AngularXstateConnectService<TStateSchema, TContext, TEvent>
     ) {
         this.stateMachine = stateMachine;
     }
@@ -32,7 +27,6 @@ export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends E
 
     dispatch(action: TEvent) {
         this.stateMachine.dispatch(action);
-
     }
 
     subscribe(callback: (state: StateMachineData<TContext, TStateSchema>) => void): void {
