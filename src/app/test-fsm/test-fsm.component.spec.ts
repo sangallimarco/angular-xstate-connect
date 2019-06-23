@@ -5,6 +5,7 @@ import { DebugElement } from '@angular/core';
 import { TestCommentComponent } from '../test-comment/test-comment.component';
 import { TestFsmService, TestFsmServiceMock } from './test-fsm.service';
 import { TestMachineState } from './test-fms.config';
+import { By } from '@angular/platform-browser';
 
 describe('TestFsmComponent', () => {
   let component: TestFsmComponent;
@@ -35,9 +36,14 @@ describe('TestFsmComponent', () => {
   });
 
   it('should change state', () => {
-    expect(component).toBeTruthy();
     component.handleClick();
     expect(component.dispatch).toHaveBeenCalledWith({ type: 'SUBMIT', extra: 'ok' });
+    // expect(component.state.currentState).toEqual(TestMachineState.PROCESSING);
+  });
+
+  it('should render', () => {
+    const elem = fixture.debugElement.query(By.css('.btn'));
+    expect(elem).toBeTruthy();
     // expect(component.state.currentState).toEqual(TestMachineState.PROCESSING);
   });
 });

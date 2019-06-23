@@ -6,16 +6,17 @@
   </code>
 
   <div class="test-fsm__list">
-      <app-test-comment *ngFor="let item of state.context.items; let first = first"  [class.first-item]="first" [comment]="item" (onSelect)="handleSelect()"></app-test-comment>
+      <app-test-comment *ngFor="let item of state.context.items; let first = first"  [class.first-item]="first" [comment]="item" (onSelect)="handleSelect()">ng-content HERE</app-test-comment>
   </div>
 
   <div [ngSwitch]="state.currentState">
-    <div *ngSwitchCase="'START'"> need to use enums here
+      <!-- need to use enums here -->
+    <div *ngSwitchCase="'START'">
       <button (click)="handleClick()">SUBMIT</button>
     </div>
   </div>
   
-  <button (click)="handleReset()">RESET</button>
+  <button class="btn" (click)="handleReset()">RESET</button>
 </div>
 
 

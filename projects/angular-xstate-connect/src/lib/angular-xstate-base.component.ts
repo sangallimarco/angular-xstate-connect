@@ -49,6 +49,4 @@ export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends E
         this.stateMachine.destroy();
     }
 
-
-
 }
