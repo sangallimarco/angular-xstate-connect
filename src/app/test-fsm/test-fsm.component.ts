@@ -26,11 +26,14 @@ export class TestFsmComponent implements AngularXstateConnectProps<TestMachineSt
   }
 
   ngOnInit() {
+    // optional
     this.stateMachine.init({
       services: {
         [TestMachineService.FETCH_DATA]: (ctx) => this.dataService.getComments()
       }
     });
+
+    // optional
     this.stateMachine.subscribe((state) => {
       this.submitVisible = state.currentState === TestMachineState.START;
     });
