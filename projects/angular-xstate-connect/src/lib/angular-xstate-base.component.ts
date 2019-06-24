@@ -10,16 +10,17 @@ export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends E
 
     constructor(
         private stateMachine: AngularXstateConnectService<TStateSchema, TContext, TEvent>,
-        private config: MachineConfig<TContext, TStateSchema, TEvent>,
-        private initialContext: TContext
+        config: MachineConfig<TContext, TStateSchema, TEvent>,
+        initialContext: TContext
     ) {
+        this.stateMachine.setConfig(config, initialContext);
     }
 
     init(
         configOptions?: Partial<MachineOptions<TContext, TEvent>>,
         stream?: EventEmitter<TEvent>
     ) {
-        this.stateMachine.init(this.config, this.initialContext, configOptions);
+        this.stateMachine.init(configOptions);
         this.stateMachine.subscribe((state) => {
             this.state = state;
         });

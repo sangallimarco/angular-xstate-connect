@@ -1,51 +1,45 @@
 
-import { AngularXstateConnectService } from './angular-xstate-connect.service';
+import { AngularXstateConnectService, StateMachineData } from './angular-xstate-connect.service';
 import { EventObject, StateSchema, DefaultContext, MachineConfig, MachineOptions } from 'xstate';
 import { Injector } from '@angular/core';
 
 
 export interface AngularXstateConnectProps<TStateSchema, TContext, TEvent extends EventObject = EventObject> {
-    state: TContext;
-    init: (config: MachineConfig<TContext, TStateSchema, TEvent>,
-        context: TContext,
-        events: Partial<MachineOptions<TContext, TEvent>>) => void;
-        dispatch: (event: TEvent) => void;
+    state: StateMachineData<TContext, TStateSchema> | undefined;
+    stateMachine: AngularXstateConnectService<TStateSchema, TContext, TEvent>
 }
 
-export function AngularXstateConnect<TStateSchema extends StateSchema, TContext = DefaultContext, TEvent extends EventObject = EventObject>(): ClassDecorator {
+export function AngularXstateConnect<TStateSchema extends StateSchema, TContext = DefaultContext, TEvent extends EventObject = EventObject>(
+    config: {
+        machine: MachineConfig<TContext, TStateSchema, TEvent>,
+        initialContext: TContext
+    }
+): ClassDecorator {
 
     type serviceType = AngularXstateConnectService<TStateSchema, TContext, TEvent>;
 
     return function (constructor: any) {
+        const { machine, initialContext } = config;
         const injector = Injector.create({ providers: [{ provide: AngularXstateConnectService, deps: [] }] });
         const stateMachine: serviceType = injector.get(AngularXstateConnectService) as any;
+        stateMachine.setConfig(machine, initialContext);
 
         // create state variable
-        constructor.prototype.state = undefined;
-        // constructor.prototype.stateMachine = stateMachine;
+        constructor.prototype.state = initialContext;
+        constructor.prototype.stateMachine = stateMachine;
 
         const ngOnInit = constructor.prototype.ngOnInit;
+
         constructor.prototype.ngOnInit = function (...args) {
-            ngOnInit && ngOnInit.apply(this, args);
-        }
-
-        constructor.prototype.init = function (
-            config: MachineConfig<TContext, TStateSchema, TEvent>,
-            context: TContext,
-            events: Partial<MachineOptions<TContext, TEvent>>) {
-
-            stateMachine.init(config, context, events);
             stateMachine.subscribe((state) => {
                 this.state = state;
             });
+            ngOnInit && ngOnInit.apply(this, args);
+            // configure if not set up
+            stateMachine.init({});
         }
 
-        constructor.prototype.dispatch = function (event: TEvent){
-            stateMachine.dispatch(event);
-        };
-
         const ngOnDestroy = constructor.prototype.ngOnDestroy;
-
         constructor.prototype.ngOnDestroy = function (...args) {
             stateMachine.destroy();
             ngOnDestroy && ngOnDestroy.apply(this, args);

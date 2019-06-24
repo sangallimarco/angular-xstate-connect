@@ -41,9 +41,10 @@ export class AngularXstateConnectService<
   private currentContext: TContext | null = null;
   private state: StateMachineData<TContext, TStateSchema>;
   private updateStream = new ReplaySubject<StateMachineData<TContext, TStateSchema>>(1);
+  private config: MachineConfig<TContext, TStateSchema, TEvent>;
+  private initialContext: TContext
 
   constructor() {
-    console.warn('instance');
   }
 
   private initInterpreter(): void {
@@ -81,10 +82,18 @@ export class AngularXstateConnectService<
     }
   }
 
+  public setConfig(
+    config: MachineConfig<TContext, TStateSchema, TEvent>,
+    initialContext: TContext,
+  ) {
+    this.config = config;
+    this.initialContext = initialContext;
+  }
+
   public init(
-    config: MachineConfig<TContext, TStateSchema, TEvent>, initialContext: TContext,
-    configOptions: Partial<MachineOptions<TContext, TEvent>> = {}): void {
-    this.stateMachine = Machine(config, configOptions, initialContext);
+    configOptions: Partial<MachineOptions<TContext, TEvent>> = {}
+  ): void {
+    this.stateMachine = Machine(this.config, configOptions, this.initialContext);
     this.state = {
       currentState: this.stateMachine.initialState.value as StateMachineStateName<TStateSchema>,
       context: this.stateMachine.context as TContext

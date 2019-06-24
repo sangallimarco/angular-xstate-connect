@@ -6,3 +6,4 @@
 export * from './lib/angular-xstate-connect.service';
 export * from './lib/angular-xstate-base.component';
 export * from './lib/angular-xstate-connect.decorator';
+export * from './lib/angular-xstate-connect.decorator';
