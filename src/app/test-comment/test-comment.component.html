@@ -1,3 +1,4 @@
-<div class="test-comment">
+<div class="test-comment" appHighlightOnOver>
   {{comment.body}}-<button (click)="handleClick($event)">PUSH</button>
+  <ng-content></ng-content>
 </div>

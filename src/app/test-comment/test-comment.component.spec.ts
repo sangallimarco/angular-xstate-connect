@@ -16,12 +16,11 @@ describe('TestCommentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TestCommentComponent);
     component = fixture.componentInstance;
+    component.comment = {id: '123', body: 'body here', postId: '1232323'};
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    component.comment = {id: '123', body: 'body here', postId: '1232323'};
-    fixture.detectChanges();
   });
 });

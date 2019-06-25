@@ -17,15 +17,14 @@ export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends E
     }
 
     init(
-        configOptions?: Partial<MachineOptions<TContext, TEvent>>,
-        stream?: EventEmitter<TEvent>
+        configOptions?: Partial<MachineOptions<TContext, TEvent>>
     ) {
         this.stateMachine.init(this.config, this.initialContext, configOptions);
         this.stateMachine.subscribe((state) => {
             this.state = state;
         });
-        if (stream) {
-            this.streamSub = stream.subscribe((event: TEvent) => {
+        if (this.stream) {
+            this.streamSub = this.stream.subscribe((event: TEvent) => {
                 this.stateMachine.dispatch(event);
             });
         }
@@ -39,7 +38,7 @@ export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends E
         this.stateMachine.subscribe(callback);
     }
 
-    ngOnInit(){
+    ngOnInit() {
         this.init({});
     }
 

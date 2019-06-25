@@ -6,12 +6,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TestFsmComponent } from './test-fsm/test-fsm.component';
 import { TestCommentComponent } from './test-comment/test-comment.component';
+import { HighlightOnOverDirective } from './highlight-on-over.directive';
+import { TrimTextPipe } from './trim-text.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestFsmComponent,
-    TestCommentComponent
+    TestCommentComponent,
+    HighlightOnOverDirective,
+    TrimTextPipe
   ],
   imports: [
     BrowserModule,
