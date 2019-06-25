@@ -9,10 +9,8 @@ import { AngularXstateConnectService, AngularXstateBaseComponent } from 'angular
   styleUrls: ['./test-fsm.component.less'],
   providers: [AngularXstateConnectService]
 })
-export class TestFsmComponent extends AngularXstateBaseComponent<TestContext, TestMachineStateSchema, TestMachineEvent> implements OnInit {
+export class TestFsmComponent extends AngularXstateBaseComponent<TestContext, TestMachineStateSchema, TestMachineEvent> {
 
-  // remote comminication stream, it is then passed to the FSM
-  @Input() stream: EventEmitter<TestMachineEvent>;
   submitVisible: boolean = true;
 
   constructor(
@@ -28,8 +26,7 @@ export class TestFsmComponent extends AngularXstateBaseComponent<TestContext, Te
         services: {
           [TestMachineService.FETCH_DATA]: (ctx) => this.dataService.getComments()
         }
-      },
-      this.stream
+      }
     );
 
     this.subscribe((state) => {

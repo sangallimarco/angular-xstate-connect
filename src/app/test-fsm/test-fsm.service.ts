@@ -22,3 +22,12 @@ export class TestFsmService {
     return { items };
   }
 }
+
+export class TestFsmServiceMock implements Partial<TestFsmService>{
+
+  constructor() { }
+
+  async getComments(): Promise<Partial<TestContext>> {
+    return Promise.resolve({ items: [] });
+  }
+}
