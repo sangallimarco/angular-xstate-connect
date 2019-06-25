@@ -42,10 +42,6 @@ export class AngularXstateConnectService<
   private state: StateMachineData<TContext, TStateSchema>;
   private updateStream = new ReplaySubject<StateMachineData<TContext, TStateSchema>>(1);
 
-  constructor() {
-    console.warn('instance');
-  }
-
   private initInterpreter(): void {
     if (!this.interpreter) {
       this.interpreter = interpret(this.stateMachine);

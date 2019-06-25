@@ -4,6 +4,7 @@ import { MachineConfig, EventObject, MachineOptions } from 'xstate';
 import { Subscription } from 'rxjs';
 
 export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends EventObject = EventObject> implements OnInit, OnDestroy {
+    @Input() stream: EventEmitter<TEvent>;
 
     public state: StateMachineData<TContext, TStateSchema>;
     private streamSub: Subscription | undefined;
@@ -30,10 +31,6 @@ export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends E
         }
     }
 
-    ngOnInit() {
-
-    }
-
     dispatch(action: TEvent) {
         this.stateMachine.dispatch(action);
     }
@@ -42,13 +39,14 @@ export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends E
         this.stateMachine.subscribe(callback);
     }
 
+    ngOnInit(){
+        this.init({});
+    }
+
     ngOnDestroy() {
         if (this.streamSub) {
             this.streamSub.unsubscribe();
         }
         this.stateMachine.destroy();
     }
-
-
-
 }
