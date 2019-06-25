@@ -1,9 +1,10 @@
-import { OnInit, OnDestroy, Input, EventEmitter } from '@angular/core';
+import { OnDestroy, Input, EventEmitter } from '@angular/core';
 import { StateMachineData, AngularXstateConnectService } from './angular-xstate-connect.service';
 import { MachineConfig, EventObject, MachineOptions } from 'xstate';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 
-export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends EventObject = EventObject> implements OnInit, OnDestroy {
+export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends EventObject = EventObject> implements OnDestroy {
+    @Input() stream: EventEmitter<TEvent>;
 
     public state: StateMachineData<TContext, TStateSchema>;
     private streamSub: Subscription | undefined;
@@ -16,22 +17,17 @@ export class AngularXstateBaseComponent<TContext, TStateSchema, TEvent extends E
     }
 
     init(
-        configOptions?: Partial<MachineOptions<TContext, TEvent>>,
-        stream?: EventEmitter<TEvent>
+        configOptions?: Partial<MachineOptions<TContext, TEvent>>
     ) {
         this.stateMachine.init(this.config, this.initialContext, configOptions);
         this.stateMachine.subscribe((state) => {
             this.state = state;
         });
-        if (stream) {
-            this.streamSub = stream.subscribe((event: TEvent) => {
+        if (this.stream) {
+            this.streamSub = this.stream.subscribe((event: TEvent) => {
                 this.stateMachine.dispatch(event);
             });
         }
-    }
-
-    ngOnInit() {
-
     }
 
     dispatch(action: TEvent) {

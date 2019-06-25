@@ -11,8 +11,6 @@ import { AngularXstateConnectService, AngularXstateBaseComponent } from 'angular
 })
 export class TestFsmComponent extends AngularXstateBaseComponent<TestContext, TestMachineStateSchema, TestMachineEvent> {
 
-  // remote communication stream, it is then passed to the FSM
-  @Input() stream: EventEmitter<TestMachineEvent>;
   submitVisible: boolean = true;
 
   constructor(
@@ -28,8 +26,7 @@ export class TestFsmComponent extends AngularXstateBaseComponent<TestContext, Te
         services: {
           [TestMachineService.FETCH_DATA]: (ctx) => this.dataService.getComments()
         }
-      },
-      this.stream
+      }
     );
 
     this.subscribe((state) => {
