@@ -17,7 +17,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build:lib": "ng build angular-xstate-connect"
   },
   "private": true,
   "dependencies": {
@@ -34,7 +35,7 @@
     "rxjs": "~6.5.3",
     "tslib": "^1.10.0",
     "uuid": "^3.3.2",
-    "xstate": "^4.5.0",
+    "xstate": "^4.6.7",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
