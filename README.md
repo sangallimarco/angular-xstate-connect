@@ -1,5 +1,24 @@
 # Angular Xstate Connector 
 
+# How to 
+
+Install the package with 
+`yarn add angular-xstate-connect` 
+or 
+`npm install angular-xstate-connect`
+
+
+Please refer to this example for now ( documentation is work in progress )
+
+https://stackblitz.com/edit/angular-xstate-test-marco
+
+Component:
+
+https://stackblitz.com/edit/angular-xstate-test-marco?file=src%2Fapp%2Ftest-fsm%2Ftest-fsm.component.ts
+
+
+# Develop  
+
 ## Library and Test app
 This repo contains the library code and a demo application
 
