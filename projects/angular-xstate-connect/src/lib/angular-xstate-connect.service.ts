@@ -58,25 +58,6 @@ export class AngularXstateConnectService<
     }
   }
 
-  private handleContext(context: TContext): void {
-    if (context !== this.currentContext) {
-      this.state = Object.assign(this.state, { context, stateHash: v4() });
-      this.currentContext = context;
-      this.update();
-    }
-  }
-
-  private handleTransition(newState: State<TContext, EventObject>): void {
-    const { changed, value } = newState;
-
-    if (changed && value !== this.currentStateName) {
-      this.currentStateName = value;
-      const newStateName = value as StateMachineStateName<TStateSchema>;
-      this.state = Object.assign(this.state, { currentState: newStateName, stateHash: v4() });
-      this.update();
-    }
-  }
-
   public init(
     config: MachineConfig<TContext, TStateSchema, TEvent>, initialContext: TContext,
     configOptions: Partial<MachineOptions<TContext, TEvent>> = {}): void {
@@ -113,6 +94,25 @@ export class AngularXstateConnectService<
     if (this.interpreter) {
       this.interpreter
         .send(action);
+    }
+  }
+
+  private handleContext(context: TContext): void {
+    if (context !== this.currentContext) {
+      this.state = { ...this.state, context, stateHash: v4() };
+      this.currentContext = context;
+      this.update();
+    }
+  }
+
+  private handleTransition(newState: State<TContext, EventObject>): void {
+    const { changed, value } = newState;
+
+    if (changed && value !== this.currentStateName) {
+      this.currentStateName = value;
+      const newStateName = value as StateMachineStateName<TStateSchema>;
+      this.state = { ...this.state, currentState: newStateName, stateHash: v4() };
+      this.update();
     }
   }
 }
