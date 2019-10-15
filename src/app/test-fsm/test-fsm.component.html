@@ -1,8 +1,8 @@
-<div class="test-fsm" [class.test-fsm--active]="submitVisible">
+<div class="test-fsm" [class.test-fsm--active]="state.currentState === states.START">
   <h1>{{state.currentState}}</h1>
 
   <code>
-    {{state | json}}
+    Context: {{state | json}}
   </code>
 
   <div class="test-fsm__list">
@@ -11,11 +11,11 @@
 
   <div [ngSwitch]="state.currentState">
       <!-- need to use enums here -->
-    <div *ngSwitchCase="'START'">
+    <div *ngSwitchCase="states.START">
       <button (click)="handleClick()">SUBMIT</button>
     </div>
   </div>
-  
+
   <button class="btn" (click)="handleReset()">RESET</button>
 </div>
 

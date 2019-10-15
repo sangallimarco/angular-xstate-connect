@@ -1,5 +1,14 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { TestContext, TestMachineStateSchema, TestMachineEvent, TestMachineService, TestMachineConfig, TestMachineInitialContext, TestMachineAction, TestMachineState } from './test-fms.config';
+import { Component, OnInit } from '@angular/core';
+import {
+  TestContext,
+  TestMachineStateSchema,
+  TestMachineEvent,
+  TestMachineService,
+  TestMachineConfig,
+  TestMachineInitialContext,
+  TestMachineAction,
+  TestMachineState
+} from './test-fms.config';
 import { TestFsmService } from './test-fsm.service';
 import { AngularXstateConnectService, AngularXstateBaseComponent } from 'angular-xstate-connect';
 
@@ -9,9 +18,10 @@ import { AngularXstateConnectService, AngularXstateBaseComponent } from 'angular
   styleUrls: ['./test-fsm.component.less'],
   providers: [AngularXstateConnectService]
 })
-export class TestFsmComponent extends AngularXstateBaseComponent<TestContext, TestMachineStateSchema, TestMachineEvent> {
+export class TestFsmComponent extends AngularXstateBaseComponent<TestContext, TestMachineStateSchema, TestMachineEvent> implements OnInit{
 
-  submitVisible: boolean = true;
+  submitVisible = true;
+  states = TestMachineState;
 
   constructor(
     stateMachine: AngularXstateConnectService<TestMachineStateSchema, TestContext, TestMachineEvent>,
@@ -20,7 +30,7 @@ export class TestFsmComponent extends AngularXstateBaseComponent<TestContext, Te
     super(stateMachine, TestMachineConfig, TestMachineInitialContext);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.init(
       {
         services: {
@@ -28,10 +38,6 @@ export class TestFsmComponent extends AngularXstateBaseComponent<TestContext, Te
         }
       }
     );
-
-    this.subscribe((state) => {
-      this.submitVisible = state.currentState === TestMachineState.START;
-    });
   }
 
   handleClick() {
