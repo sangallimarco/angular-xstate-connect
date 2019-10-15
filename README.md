@@ -1,5 +1,7 @@
 # Angular Xstate Connector 
 
+[![DeepScan grade](https://deepscan.io/api/teams/5710/projects/7541/branches/78482/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=5710&pid=7541&bid=78482)
+
 # How to 
 
 Install the package with 
