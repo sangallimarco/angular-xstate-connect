@@ -17,18 +17,21 @@ Component:
 https://stackblitz.com/edit/angular-xstate-test-marco?file=src%2Fapp%2Ftest-fsm%2Ftest-fsm.component.ts
 
 
-# Develop  
+# Develop  Library
+Library README is located in ./projects/angular-xstate-connect
+
+## Build Library
+
+Please use `yarn build:lib`
+
+## Test Library integration
+
+from root folder `yarn start`
+
 
 ## Library and Test app
 This repo contains the library code and a demo application
 
-## Library
-
-Library README is located in ./projects/angular-xstate-connect
-
-## Demo App
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
 
 ## Development server
 
